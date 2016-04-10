@@ -1,0 +1,12 @@
+#category{
+ background: lightgrey;   
+    text-align: center;
+}
+
+#panel{
+ display: none;   
+}
+
+.red{
+ color: red;   
+}

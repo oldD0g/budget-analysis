@@ -1,0 +1,9 @@
+<?php
+require '/usr/local/share/php/phplot-6.1.0/phplot.php';
+$data = array(array('', 10), array('', 1));
+$plot = new PHPlot();
+$plot->SetDataValues($data);
+$plot->SetTitle('First Test Plot');
+$plot->DrawGraph();
+
+?>
