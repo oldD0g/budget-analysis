@@ -47,9 +47,9 @@ if (isset ($_POST['sortby'])) {
 if (isset ($_GET['category'])) { // Only show transactions from this category
 	$cat=$_GET['category'];
 	if ($cat == "Uncategorised") { // Alter the query to show all transactions with no category
-		$query = "select transid,transdate,transamt,transtext,transcat from commvisa where transcat IS NULL $order;";
+		$query = "select transid,transdate,transamt,transtext,transcat from transactions where transcat IS NULL $order;";
 	} else {
-		$query = "select transid,transdate,transamt,transtext,transcat from commvisa where transcat='$cat' $order;";
+		$query = "select transid,transdate,transamt,transtext,transcat from transactions where transcat='$cat' $order;";
 	}
 } else { // Show all transactions
 	if (isset($_GET['startdate'])) {
@@ -58,7 +58,7 @@ if (isset ($_GET['category'])) { // Only show transactions from this category
 			$where="$where" . "and transdate < '" . $_GET['enddate']. "'";
 		}
 	}
-	$query = "select transid,transdate,transamt,transtext,transcat from commvisa $where $order;";
+	$query = "select transid,transdate,transamt,transtext,transcat from transactions $where $order;";
 }
 
 
@@ -77,7 +77,7 @@ if (isset ($_GET['category'])) { // Only show transactions from this category
   <hr>
   <?php
 
-$rowCount = mysql_query("select transid from commvisa $where");
+$rowCount = mysql_query("select transid from transactions $where");
 echo "Row count is " . $rowCount;
 
 // Yes, I have no stylesheets yet, cellpadding is a kludge!
@@ -101,7 +101,7 @@ $i=1;
         	"<td>\$"  . $row['transamt'] . "</td>" .
         	"<td>" . $row['transtext'] . 
         	 "</td><td>\n";
-        dropdown($dropdownname,commvisa,transcat,$row['transcat']);
+        dropdown($dropdownname,transactions,transcat,$row['transcat']);
         print '</td><td><input type="checkbox" name="update' . $index . '">Update</td></tr>' . "\n";
         $i++;
   }

@@ -16,7 +16,7 @@ if (! isset($_POST['category'])) {
 	echo "<p>Choose a category to graph by month&nbsp;</p>";
 	
   echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
-  dropdown(category,commvisa,transcat,Groceries);
+  dropdown(category,transactions,transcat,Groceries);
   echo "<br>";
   echo "<em>Graph width: </em>";  
   echo '<input type="text" size="5" name="width" value="800">';
@@ -47,7 +47,7 @@ include ("../jpgraph-1.11/src/jpgraph_bar.php");
 // This query returns two colums - the years and months in the database in chronological order
 // to be used to loop through the database again for finding the sum of the selected
 // category
-$query="select year(transdate) as year, month(transdate) as month from commvisa group by year,month order by year,month;";
+$query="select year(transdate) as year, month(transdate) as month from transactions group by year,month order by year,month;";
 
 if (! ($result = mysql_query($query,$myDB))) {
   die("Failed to run $query against database\n");
@@ -58,7 +58,7 @@ while ($row = mysql_fetch_array($result,1)) {
 	$month = $row['month'];
 	// Use the year and the month in order and query the total for the given category.
 	//print "Got data for year $year, month $month\n<br>";
-	$query = "select sum(transamt) as amount from commvisa where year(transdate)='$year' AND month(transdate)='$month' and transcat='$category';";
+	$query = "select sum(transamt) as amount from transactions where year(transdate)='$year' AND month(transdate)='$month' and transcat='$category';";
 	$result2 = mysql_query($query,$myDB);
 	while ($row2 = mysql_fetch_array($result2,1)) {
 		$total = $row2['amount'];

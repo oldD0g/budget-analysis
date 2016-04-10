@@ -14,6 +14,9 @@
 // Splitting out the cash withdrawal is important to make it show up as cash out rather
 // than mistakenly assuming that cash was spent on groceries.
 
+// NOTE: This code is NOT finished. Currently I just pre-process the transactions
+// before loading them in.
+
 /*  The algorithm is:
 	For each transaction, where the text is of the form "SomeSupermarketID Cash Out $80.00 Purchase $9.82"
 		Adjust the existing transaction so the text only says Purchase,
@@ -36,7 +39,7 @@ if (! mysql_select_db($database,$myDB)) {
 } 
 
 // Extract all the transactions in date order and check them for the Cash Out string
-$query="select * from commvisa order by transdate";
+$query="select * from transactions order by transdate";
 
 // Note that extra whitespace inside transaction text is not unheard of
 // so the check removes any extra whitespace from transtext before checking.

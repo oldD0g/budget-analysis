@@ -53,7 +53,7 @@ if (! isset($_POST['category'])) {
 	echo "<p>Choose a category to graph by month&nbsp;</p>";
 	
   echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
-  dropdown(category,commvisa,transcat,Groceries);
+  dropdown(category,transactions,transcat,Groceries);
   echo "<br>";
   echo "<em>Graph width: </em>";  
   echo '<input type="text" size="5" name="width" value="800">';

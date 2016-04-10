@@ -352,7 +352,7 @@ This is a multistep process:
                  $currentcatlist = $row['Type'];
                  $newcatlist = str_replace("$oldcategory", "$newcategory", $currentcatlist); 
                         
-                $query="alter table commvisa modify transcat $newcatlist;";
+                $query="alter table transactions modify transcat $newcatlist;";
                 echo "Preparing alter table statement : $query<br>\n";
 
                 if ($result = mysql_query($query,$myDB)) {

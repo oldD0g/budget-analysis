@@ -4,7 +4,7 @@ include 'db.php';
 
 if (isset($_POST['searchstring'])) {
   $searchstring=$_POST['searchstring'];
-  $query = "SELECT * from commvisa where transtext regexp '.*" . $searchstring . ".*';";
+  $query = "SELECT * from transactions where transtext regexp '.*" . $searchstring . ".*';";
   
 $handle = mysql_connect("localhost","$username","$password") || die("Failed to connect to db");
 
@@ -38,7 +38,6 @@ if ($result = mysql_query($query)) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>Search Transactions</title>
-	<meta name="generator" content="BBEdit 7.1.1" />
 </head>
 <body>
 
