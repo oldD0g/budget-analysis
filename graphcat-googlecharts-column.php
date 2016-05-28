@@ -21,13 +21,19 @@
 	    // Set a callback to run when the Google Visualization API is loaded.
 	    google.setOnLoadCallback(drawChart);
 
-	    function drawChart() {
-	      var jsonData = $.ajax({
-	          url: "getGraphDataFromDB.php",
-	          dataType:"json",
+		function drawChart() {
+			
+			var dd = document.getElementById("categoryDropdown");
+			var categoryName = dd.options[dd.selectedIndex].text;
+			
+			var jsonData = $.ajax({
+				type: "POST",
+				url: "getGraphDataFromDB.php",
+				data: ({category : categoryName }),
+				dataType:"json",
 	          async: false
 	          }).responseText;
-
+			
 	      // Create our data table out of JSON data loaded from server.
 		try {
 			var data = new google.visualization.DataTable(jsonData);
@@ -39,7 +45,10 @@
 
 
 		var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-	      chart.draw(data, {width: 800, height: 400});
+	      chart.draw(data, {width: 800, height: 400, 
+			title: 'Monthly cost of ' + categoryName,
+			hAxis: { title: 'Monthly cost of ' + categoryName}
+			});
 	    }
 
 	    </script>
@@ -74,7 +83,20 @@ if (! isset($_POST['category'])) {
 ?>
 	<!--Div that will hold the column chart-->
     <div id="chart_div"></div>
+	<hr />
+	<div>Choose category to graph: </div>
+	<select id="categoryDropdown" onChange="drawChart()">
+	  <option value="1" selected="selected">Groceries</option>
+	  <option value="2">Haircuts</option>
+		<option value="3">Sports: Ice skating</option>
+	  <option value="4">Take-away</option>
+	<option value="5">Food: eating out</option>
+	<option value="6">Transport: Fuel</option>
+	<option value="7">Cash withdrawals</option>
+	<option value="5">Mobile phones</option>
+	</select>
 <?php
+		
 }
 ?>
 </body>

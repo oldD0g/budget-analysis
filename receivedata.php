@@ -1,6 +1,6 @@
 <?php
 
-include 'functions.php';
+include 'functionsv2.php';
 include 'db.php';
 global $dbuser, $dbpassword, $database, $transactionTable;
 
@@ -52,7 +52,7 @@ while (!feof ($data)) {
       	// Date in file is dd/mm/yyyy format, but MySQL likes yyyy-mm-dd format, so we switch it around
       	list($day,$month,$year) = explode("/",$date);
       	$mysqldate="$year-$month-$day";
-      	// Occasionally the Commonwealth seems to give us a file where the spaces in some transaction descriptions
+      	// Occasionally the bank seems to give us a file where the spaces in some transaction descriptions
       	// have been removed.  This results in loading duplicate transactions.  To avoid this, the description has
       	//  all spaces removed before comparisons are done.
       	$searchtext=str_replace(' ','',$description);

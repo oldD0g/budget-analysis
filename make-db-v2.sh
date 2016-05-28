@@ -6,7 +6,7 @@ create table transactions(transid INTEGER auto_increment primary key, transdate 
 	transcat ENUM("Groceries", "Health insurance",
 		"Transport: ACTION", "Bills: Gas", "Transport: bicycles",
 	"Travel: accommodation",
-	"Transport: Taxis", "Food: eating out", "Books"));
+	"Transport: Taxis", "Books"));
 
 grant select,insert,update,alter on budget2.* to budgetuser@localhost identified by 'budgetpassword'; 
 
