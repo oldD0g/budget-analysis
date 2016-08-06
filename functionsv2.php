@@ -162,6 +162,51 @@ function dropdown($name,$table,$column,$initialvalue)
 mysql_close($myDB);
 } 
 
+function categoryDropdownWithChange($dropdownName,$onChangeFunction)
+/* Create a drop down for a form to insert data from an ENUM
+  The argument to this function is the field to create the dropdown from.
+  Initialvalue is the choice in the dropdown to set to initially.  If it
+  is blank we create an entry called "Not set" and set it to this.
+
+  Note that this function has been updated to support AJAX callback to a function
+  called setNewCategory, which sets the category of the transaction to that choice.
+*/
+
+{
+
+	global $dbuser, $dbpassword, $database, $transactionTable;
+	
+
+        if (! ($myDB = mysql_connect("localhost","$dbuser","$dbpassword"))) {
+          die("Connection to MySQL server 'localhost' failed!<br>\n");
+        }
+
+        if (! mysql_select_db("$database",$myDB)) {
+                die("function dropdown: Unable to select $database database\n");
+        } 
+		
+		$table_name = $transactionTable;
+		$column_name = "transcat";
+
+		echo "<select id=\"$dropdownName\" onChange=\"$onChangeFunction\">";
+		$result = mysql_query("SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+		    WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$column_name'")
+		or die (mysql_error());
+		
+		// take the query and turn it into a list for writing as a dropdown
+		// thanks to Greta Krafsig for posting this at
+		// https://jadendreamer.wordpress.com/2011/03/16/php-tutorial-put-mysql-enum-values-into-drop-down-select-box/
+		$row = mysql_fetch_array($result);
+		$enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (strlen($row['COLUMN_TYPE'])-6))));
+
+		foreach($enumList as $value)
+		    echo "<option value=\"$value\">$value</option>\n";
+
+		echo "</select>";
+
+mysql_close($myDB);
+}
+
 function dropdowntext($name,$table,$column,$initialvalue)
 /* This function is identical to the dropdown function above except that it returns the text of
   the dropdown.  This allows pages which need lots of dropdowns to perform this function once, then
@@ -489,5 +534,29 @@ function printcats()
           echo "Failed to show columns!";
         }
 }
-                                  
+
+function yearsWithData() {
+/* Return the years that are recorded in the database, i.e. any year that a transaction is recorded
+* against.
+*/
+	global $dbuser, $dbpassword, $database, $transactionTable;
+	
+        if (! ($myDB = mysql_connect("localhost",$dbuser,$dbpassword))) {
+          die("Connection to MySQL server 'localhost' failed!<br>\n");
+        }
+
+        if (! mysql_select_db($database,$myDB)) {
+                die("(yearsWithData) Unable to select $database database\n");
+        } 
+
+       $query="select year(transdate) as years from " . $transactionTable . " group by years";
+
+        if ($result = mysql_query($query,$myDB)) {
+         	while ($row = mysql_fetch_array($result,MYSQL_NUM)) {
+				$yearValues[] = $row[0];        
+        	}
+		}
+		return($yearValues); 
+}
+                             
 ?>
