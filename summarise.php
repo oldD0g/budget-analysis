@@ -4,16 +4,18 @@
 <head>
 	<title>Transactions summarised by category</title>
 <link href="BudgetStyle.css" rel="stylesheet" type="text/css" media="screen">
+<link href="simpleCSSDropDownMenu.css" rel="stylesheet" type="text/css" media="screen">
 </head>
 <body>
-<h1>Transactions summarised by category</h1>
 
 <?php
 /* This routine summarises transactions by category, listing them in reverse spending order.
   It also prints out the monthly cost in each category for this year and the last. */
+include 'navbar.php';
 
 include 'functionsv2.php';
 include 'db.php';
+
 global $dbuser, $dbpassword, $database, $transactionTable;
 
 //print "Connecting with user $dbuser...";
@@ -29,6 +31,8 @@ if (isset($_GET['startdate']) && isset($_GET['enddate'])) {
 } else {
   $dates = startandenddate();
 }
+print "<br/>";
+print "<h1>Transactions summarised by category</h1>";
   
   list($startyear,$startmonth,$startday) = explode("-",$dates[0]);
   list($endyear,$endmonth,$endday) = explode("-",$dates[1]);
