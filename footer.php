@@ -25,7 +25,7 @@
 			Split cash out data</a></td>			
 	</tr>
 	<tr>
-		<td><a href="graphcat-googlecharts-column.php">
+		<td><a href="graphcat-googlecharts-column2.php">
 			<img src="images/graphbycat.png" alt="Graph by category"></a></td>
 	</tr>
 	<tr><td><a href="search.php"><img src="images/search.png" alt="Search"></a></td>

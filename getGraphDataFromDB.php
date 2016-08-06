@@ -1,6 +1,7 @@
 <?php
 // This AJAX routine fetches data from the database and returns it as a JSON array suitable
 //  for putting into a column graph using Google Charts
+// The data returned is monthly cost of a nominated transaction (passed in as a POST variable)
 
 include "db.php";
 include 'functionsv2.php';
