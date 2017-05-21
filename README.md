@@ -19,6 +19,7 @@ You need to create a MySQL database and create two tables in it:
 
 The catstrings table is used for storing the strings that are the
 "category guesses":
+```
 mysql> describe catstrings;
 +----------+---------+------+-----+---------+----------------+
 | Field    | Type    | Null | Key | Default | Extra          |
@@ -28,6 +29,7 @@ mysql> describe catstrings;
 | guess    | text    | YES  |     | NULL    |                |
 +----------+---------+------+-----+---------+----------------+
 3 rows in set (0.00 sec)
+```
 
 The main table for storing transaction data is called "transactions".
 It can be used to store transactions from multiple sources, e.g. a credit
@@ -58,12 +60,12 @@ To apply that to your imported data, you can then click on "Re-apply guesses".
 "Re-apply guesses" can be run anytime and will only alter the category of transactions
 that are "Uncategorised".
 
-Todo:
+## Todo:
 
-Allow more date oriented analysis:
-Better datepicker which allows you to just go back a single month rather than a whole year
+* Allow more date oriented analysis:
+* Better datepicker which allows you to just go back a single month rather than a whole year
  (although the existing one is meant to do that, it seems to have a bug on my system)
-Graph categories (column chart?) for a given period
-Show all transactions for a given period
-Allow comments to be added to transactions so you can name them for later reference
+* Graph categories (column chart?) for a given period (Partly completed using Google charts)
+* Show all transactions for a given period
+* Allow comments to be added to transactions so you can name them for later reference
 
