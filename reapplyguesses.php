@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<title>Re-apply category guesses</title>
-	<meta name="generator" content="BBEdit 7.0.3" />
+	<link href="simpleCSSDropDownMenu.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="BudgetStyle.css" rel="stylesheet" type="text/css" media="screen">
 </head>
 <body>
 <h1>Re-applying strings to transactions that are not yet set</h1>
@@ -23,6 +24,9 @@
 		through the catstrings table and build a set of arrays for faster matching.  That's version 2.
 		
 */
+
+include 'navbar.php';
+
 include 'functionsv2.php';
 include 'db.php';
 
@@ -107,7 +111,6 @@ if ($result = mysql_query($query,$myDB)) {
 
 mysql_close($myDB);
 
-include 'footer.php';
 ?>
 
 </body>
