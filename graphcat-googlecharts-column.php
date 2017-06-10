@@ -5,8 +5,7 @@
 <!--  to select the category.  The graph is done on monthly totals. -->
 <!-- Show all transactions, or optionally all transactions in a category -->
 <head>
-	<title>All transactions<?php if ( isset ($_GET['category'])) {echo " for " . $_GET['category']; } ?>
-	</title>
+	<title>Monthly cost</title>
 
 	<link rel="stylesheet" type="text/css" href="BudgetStyle.css">
 	<!-- Google Charts scripts: -->
@@ -25,6 +24,15 @@
 			
 			var dd = document.getElementById("categoryDropdown");
 			var categoryName = dd.options[dd.selectedIndex].text;
+			
+			var graphHeight =  document.getElementById("graphHeight");
+			var chartHeight = graphHeight.value;
+			
+			console.log("height is ");
+			console.log(chartHeight);
+			
+			var graphWidth =  document.getElementById("graphWidth");
+			var chartWidth = graphWidth.value;
 			
 			var jsonData = $.ajax({
 				type: "POST",
@@ -45,10 +53,13 @@
 
 
 		var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-	      chart.draw(data, {width: 800, height: 400, 
+	      chart.draw(data, {width: chartWidth, height: chartHeight, 
 			title: 'Monthly cost of ' + categoryName,
 			hAxis: { title: 'Monthly cost of ' + categoryName}
 			});
+			
+			newTitle = "Monthly cost for " + categoryName;
+			document.title = newTitle;
 	    }
 
 	    </script>
@@ -71,10 +82,10 @@ if (! isset($_POST['category'])) {
   dropdown(category,$transactionTable,transcat,Groceries);
   echo "<br>";
   echo "<em>Graph width: </em>";  
-  echo '<input type="text" size="5" name="width" value="800">';
+  echo '<input type="text" id="graphWidth" size="5" name="width" value="800">';
   echo "<br>";
   echo "<em>Graph height: </em>";
-  echo '<input type="text" size="5" name="height" value="600">';
+  echo '<input type="text" id="graphHeight" size="5" name="height" value="600">';
   echo '<input type="submit" name="submit" value="Graph it!">';
   echo '</form>';
   include 'footer.php';
@@ -82,9 +93,9 @@ if (! isset($_POST['category'])) {
   /* Produce the graph using Google Charts */
 ?>
 	<!--Div that will hold the column chart-->
-    <div id="chart_div"></div>
-	<hr />
-	<div>Choose category to graph: </div>
+    <div id="chart_div" class="GoogleGraph"></div>
+
+	<div class="categorychooser">Choose category to graph: 
 	<select id="categoryDropdown" onChange="drawChart()">
 	  <option value="1" selected="selected">Groceries</option>
 	  <option value="2">Haircuts</option>
@@ -93,8 +104,12 @@ if (! isset($_POST['category'])) {
 	<option value="5">Food: eating out</option>
 	<option value="6">Transport: Fuel</option>
 	<option value="7">Cash withdrawals</option>
-	<option value="5">Mobile phones</option>
+	<option value="8">Mobile phones</option>
+	<option value="9">Food: Work lunches</option>
+	<option value="9">Entertainment: Movies</option>
+	<option value="9">Transport: Fuel</option>
 	</select>
+	</div>
 <?php
 		
 }
