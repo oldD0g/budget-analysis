@@ -14,6 +14,28 @@ It isn't a budget planner, where you figure out how much you can afford
 to spend on various categories.  It can help after the fact to determine
 whether you stuck to a budget.
 
+# Getting Started:
+* Set up your db.php with your database settings
+* Go to the setup.php file, this will create a database table
+ready for budget data
+* Go to selectdata.php to load in some data
+* Load up the file summarise.php and start analysing!
+
+At the bottom of each page, there are a set of buttons to control the
+system. A good starting point will be "Upload data".
+Data is expected to be comma separated, in the form:
+
+date,amount,description
+
+Once you have some data loaded, you will want to browse through it and
+identify some common transactions, to add categories and strings to match
+those categories.
+For instance, if you often buy take away food at "BACKOFBEYOND GRILL", you will probably
+want to click "Edit categories" and create a category called "Takeaway". Then click
+"Edit category guesses" and set up "BACKOFBEYOND GRILL" as a string for "Takeaway".
+To apply that to your imported data, you can then click on "Re-apply guesses".
+"Re-apply guesses" can be run anytime and will only alter the category of transactions
+that are "Uncategorised".
 ## How to get started/install it?
 You need to create a MySQL database and create two tables in it:
 
@@ -42,23 +64,7 @@ Once you have done that, edit the file db-settings.php in this directory,
 and rename it to "db.php" so it will be included by the other code to allow
 it to access your new database.
 
-# Getting Started:
-Load up the file summarise.php
-At the bottom of each page, there are a set of buttons to control the
-system. A good starting point will be "Upload data".
-Data is expected to be comma separated, in the form:
 
-date,amount,description
-
-Once you have some data loaded, you will want to browse through it and
-identify some common transactions, to add categories and strings to match
-those categories.
-For instance, if you often buy take away food at "BACKOFBEYOND GRILL", you will probably
-want to click "Edit categories" and create a category called "Takeaway". Then click
-"Edit category guesses" and set up "BACKOFBEYOND GRILL" as a string for "Takeaway".
-To apply that to your imported data, you can then click on "Re-apply guesses".
-"Re-apply guesses" can be run anytime and will only alter the category of transactions
-that are "Uncategorised".
 
 ## Todo:
 
