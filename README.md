@@ -21,6 +21,16 @@ ready for budget data
 * Go to selectdata.php to load in some data
 * Load up the file summarise.php and start analysing!
 
+## Setting up db.php
+There is a sample file called db-settings.php in the repo.
+Edit the contents to match your database name, your database user
+and password, and the name of the table you want to use.
+
+## Using setup.php
+This would be a great idea but I haven't actually written this file
+yet :-(  
+Just follow the instructions below about how to create the database.
+
 At the bottom of each page, there are a set of buttons to control the
 system. A good starting point will be "Upload data".
 Data is expected to be comma separated, in the form:
@@ -36,8 +46,30 @@ want to click "Edit categories" and create a category called "Takeaway". Then cl
 To apply that to your imported data, you can then click on "Re-apply guesses".
 "Re-apply guesses" can be run anytime and will only alter the category of transactions
 that are "Uncategorised".
+
 ## How to get started/install it?
-You need to create a MySQL database and create two tables in it:
+You need to create a MySQL database. To avoid having to give this code full access to
+your MySQL install, you have to do part 1 yourself and then the setup.php script
+will do part 2.
+
+### Part 1
+Create a database to contain your budget data.  Let's assume you call it "budgetdb".
+Create a user with full privileges over that database.  Let's assume you call the
+user "budgetuser" and give it a password "budgetpw".  You will probably need SQL like:
+
+
+    create database budgetdb;
+    create user budgetuser identified by 'budgetpw';
+    grant all on budgetdb.* to  budgetuser@'localhost'; 
+    
+Now edit the file db.php, there is a template in db-settings.php you can use,
+and put the database name, username and password in the file to allow the system
+to access the database and create the tables.
+
+### Part 2
+Once you have created your database, setup a budget user and edited db.php, you can
+run setup.php to create the two tables in your database:
+
 
 The catstrings table is used for storing the strings that are the
 "category guesses":
