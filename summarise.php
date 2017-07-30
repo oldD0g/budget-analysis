@@ -1,6 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+
 <head>
 	<title>Transactions summarised by category</title>
     
@@ -19,15 +18,17 @@
     
 include 'navbar.php';
 
-include 'functionsv2.php';
+include 'functionsv3.php';
 include 'db.php';
 
 global $dbuser, $dbpassword, $database, $transactionTable;
 
 //print "Connecting with user $dbuser...";
 
-if (! ($handle = mysql_connect("localhost",$dbuser,$dbpassword))) {
-          budgetFail("Connection to MySQL server 'localhost' failed! Maybe the database is not running?");
+$myDB = mysqli_connect("localhost",$dbuser,$dbpassword,$database);
+   
+if ($myDB->connect_error) {
+          budgetFail("Connection to MySQL server on 'localhost' failed! Maybe the database is not running?");
 }
 
 if (isset($_GET['startdate']) && isset($_GET['enddate'])) {
@@ -39,7 +40,13 @@ if (isset($_GET['startdate']) && isset($_GET['enddate'])) {
 }
 print "<br/>";
 print "<h1>Transactions summarised by category</h1>";
-  
+
+//print "<p>start and end dates are: $dates[0]</p>";
+if ($dates[0] == "empty") {
+    print "Empty database! You probably need to import some data!";
+    exit;
+}
+    
   list($startyear,$startmonth,$startday) = explode("-",$dates[0]);
   list($endyear,$endmonth,$endday) = explode("-",$dates[1]);
   
@@ -75,14 +82,12 @@ print "<h1>Transactions summarised by category</h1>";
 echo '<table border="1">';
 
 
-mysql_select_db("$database") || die("Failed to select $database DB");
-
-if ($result = mysql_query($query)) {
+if ($result = mysqli_query($myDB,$query)) {
      
   echo "<thead><tr><th>Category</th><th>Amount</th><th>Weekly cost</th><th>Monthly Cost</th><th>This year</th>" .
   	"<th>Last year</th></tr></thead>\n\n";
   $rowsreturned=0;
-  while ($row=mysql_fetch_array($result)) {
+  while ($row=mysqli_fetch_array($result)) {
 	// This loop stores the data into the $row array for processing and printing afterwards
 	// This allows totals and such to be easily calculated for printing.
 	
@@ -121,8 +126,8 @@ if ($result = mysql_query($query)) {
   		$thisyearquery='select sum(transamt) as totalthisyear from ' . $transactionTable . ' where transcat="' . 
   			$key . '" and transdate > "' . $startthisyear . '";';
   			//echo "Executing $thisyearquery";
-  		if ($thisyearresult=mysql_query($thisyearquery)) {
-  			$thisyearrow=mysql_fetch_array($thisyearresult);
+  		if ($thisyearresult=mysqli_query($thisyearquery)) {
+  			$thisyearrow=mysqli_fetch_array($thisyearresult);
   			$totalthisyear=$thisyearrow['totalthisyear'];
   			//print "Set totalthisyear to " . $totalthisyear. "\n";
     		echo "<td> $" . (int)($totalthisyear/$thismonth) . "</td>\n";
@@ -133,8 +138,8 @@ if ($result = mysql_query($query)) {
     	$lastyearquery='select sum(transamt) as totallastyear from ' . $transactionTable . ' where transcat="' . 
   			$key . '" and transdate > "' . $startlastyear . '" and transdate < "' . $endlastyear . '";';
   			//echo "Executing $lastyearquery";
-  		if ($lastyearresult=mysql_query($lastyearquery)) {
-  			$lastyearrow=mysql_fetch_array($lastyearresult);
+  		if ($lastyearresult=mysqli_query($myDB,$lastyearquery)) {
+  			$lastyearrow=mysqli_fetch_array($lastyearresult);
   			$totallastyear=$lastyearrow['totallastyear'];
   			//print "Set totallastyear to " . $totallastyear. "\n";
     		echo "<td> $" . (int)($totallastyear/12) . "</td>\n";
@@ -156,7 +161,7 @@ if ($result = mysql_query($query)) {
   print "</table>\n";
  
 } else {
-  print "Failed to execute query: : ". mysql_error();
+  print "Failed to execute query: : ". mysqli_error();
 }
 
 ?>

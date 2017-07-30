@@ -72,6 +72,9 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "<p>Error creating table " . $categoryTable . ":" . $conn->error . "</p>";
 }
+ 
+echo "<hr/>";
+echo "<a href=\"summarise.php\">Go to start page</a>";
 
 $conn->close();
 
