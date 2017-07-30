@@ -3,5 +3,5 @@ $dbuser="budgetuser";
 $dbpassword="something";
 $database="budget2";
 $transactionTable="transactions";
-$categoryTable = :"catstrings";
+$categoryTable = "catstrings";
 ?>
