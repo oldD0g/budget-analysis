@@ -11,7 +11,7 @@ based on categories you create.
 You add strings to act as "category guesses" which tell the system what
 category to put a transaction into based on the transaction text. For instance,
 
-"If a transaction was at TIMBUKTU WOOLWORTHS", put it into the "Groceries" category.
+If a transaction was at "TIMBUKTU WOOLWORTHS", put it into the "Groceries" category.
 
 As you create more of these guesses, the
 system assigns more transactions automatically to categories, saving time.
@@ -38,14 +38,7 @@ ready for budget data
 * Go to selectdata.php to load in some data
 * Load up the file summarise.php and start analysing!
 
-## Setting up db.php
-There is a sample file called db-settings.php in the repo.
-Edit the contents to match your database name, your database user
-and password, and the name of the table you want to use.
-
-## Using setup.php
-
-
+See the "How to get started" section below for more details.
 
 
 ## How to get started/install it?
@@ -66,6 +59,19 @@ user "budgetuser" and give it a password "budgetpw".  You will probably need SQL
 Now edit the file db.php, there is a template in db-settings.php you can use,
 and put the database name, username and password in the file to allow the system
 to access the database and create the tables.
+
+Your db.php file should end up looking like this:
+
+    <?php
+        $dbuser="budgetuser";
+        $dbpassword="budgetpw";
+        $database="budgetdb";
+        $transactionTable="transactions";
+        $categoryTable = "catstrings";
+    ?>
+
+Note: You shouldn't edit the "transactions" and "catstrings" table names.  It's possible
+that they are still hard-coded in some places.
 
 ### Part 2
 Once you have created your database, setup a budget user and edited db.php, you can
