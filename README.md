@@ -78,6 +78,17 @@ Once you have created your database, setup a budget user and edited db.php, you 
 run setup.php to create the two tables in your database:
 
 
+# Notes
+## The transactions table
+
+The main table for storing transaction data is called "transactions".
+It can be used to store transactions from multiple sources, e.g. a credit
+card and a transaction account, so that your overall expenditure is analysed
+regardless of where the expense is listed. In fact, it doesn't currently
+support separate tables.
+
+## The category guesses "catstrings" table
+
 The catstrings table is used for storing the strings that are the
 "category guesses":
 ```
@@ -91,13 +102,8 @@ mysql> describe catstrings;
 +----------+---------+------+-----+---------+----------------+
 3 rows in set (0.00 sec)
 ```
-# Notes
-The main table for storing transaction data is called "transactions".
-It can be used to store transactions from multiple sources, e.g. a credit
-card and a transaction account, so that your overall expenditure is analysed
-regardless of where the expense is listed. In fact, it doesn't currently
-support separate tables.
 
+## Other notes
 (Note: This script has been replaced by the setup.php code)
 The script "make-db-v2.sh" can create the database and tables for you.
 You need to edit the passwords and usernames to suit.
