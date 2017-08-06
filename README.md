@@ -1,11 +1,18 @@
 # README for budget analysis system
 
 ## What does this system do?
-It allows you to upload your bank transaction data into a database (e.g. MySQL,
+The goal of this system is to analyse your expenditure across categories that you define.
+For instance, "How much am I spending on public transport each month?" or "Where does most of my money go?"
+
+It does this by uploading your bank transaction data into a database (e.g. MySQL,
 mariadb) and then provides analysis of where you spent your money,
 based on categories you create.
+
 You add strings to act as "category guesses" which tell the system what
-category to put a transaction into based on the transaction text.
+category to put a transaction into based on the transaction text. For instance,
+
+"If a transaction was at TIMBUKTU WOOLWORTHS", put it into the "Groceries" category.
+
 As you create more of these guesses, the
 system assigns more transactions automatically to categories, saving time.
 
@@ -14,9 +21,19 @@ It isn't a budget planner, where you figure out how much you can afford
 to spend on various categories.  It can help after the fact to determine
 whether you stuck to a budget.
 
+It doesn't connect to your bank and download transactions, you have to do
+this yourself - this way it doesn't need to know your banking credentials.
+Instead it accepts CSV files.
+
 # Getting Started:
-* Set up your db.php with your database settings
-* Go to the setup.php file, this will create a database table
+This is not an app or an exe, it is a PHP application and you will need
+a PHP/MySQL/Apache stack for it to operate.
+
+Once you have that, e.g. by installing XAMPP or finding a hosting platform:
+
+* Set up a database ready for the code to install tables for the data
+* Set up your db.php with your database settings that you just created
+* Go to the setup.php file in your browser, this will create a database table
 ready for budget data
 * Go to selectdata.php to load in some data
 * Load up the file summarise.php and start analysing!
@@ -27,25 +44,9 @@ Edit the contents to match your database name, your database user
 and password, and the name of the table you want to use.
 
 ## Using setup.php
-This would be a great idea but I haven't actually written this file
-yet :-(  
-Just follow the instructions below about how to create the database.
 
-At the bottom of each page, there are a set of buttons to control the
-system. A good starting point will be "Upload data".
-Data is expected to be comma separated, in the form:
 
-date,amount,description
 
-Once you have some data loaded, you will want to browse through it and
-identify some common transactions, to add categories and strings to match
-those categories.
-For instance, if you often buy take away food at "BACKOFBEYOND GRILL", you will probably
-want to click "Edit categories" and create a category called "Takeaway". Then click
-"Edit category guesses" and set up "BACKOFBEYOND GRILL" as a string for "Takeaway".
-To apply that to your imported data, you can then click on "Re-apply guesses".
-"Re-apply guesses" can be run anytime and will only alter the category of transactions
-that are "Uncategorised".
 
 ## How to get started/install it?
 You need to create a MySQL database. To avoid having to give this code full access to
@@ -84,21 +85,38 @@ mysql> describe catstrings;
 +----------+---------+------+-----+---------+----------------+
 3 rows in set (0.00 sec)
 ```
-
+# Notes
 The main table for storing transaction data is called "transactions".
 It can be used to store transactions from multiple sources, e.g. a credit
 card and a transaction account, so that your overall expenditure is analysed
-regardless of where the expense is listed.
+regardless of where the expense is listed. In fact, it doesn't currently
+support separate tables.
 
-The script "make-db-v2.sh" will create the database and tables for you.
+(Note: This script has been replaced by the setup.php code)
+The script "make-db-v2.sh" can create the database and tables for you.
 You need to edit the passwords and usernames to suit.
 Once you have done that, edit the file db-settings.php in this directory,
 and rename it to "db.php" so it will be included by the other code to allow
 it to access your new database.
 
+# Getting Started Using the System
+At the bottom of each page, there are a set of buttons to control the
+system. A good starting point will be "Upload data".
+Data is expected to be comma separated, in the form:
 
+date,amount,description
 
-## Todo:
+Once you have some data loaded, you will want to browse through it and
+identify some common transactions, to add categories and strings to match
+those categories.
+For instance, if you often buy take away food at "BACKOFBEYOND GRILL", you will probably
+want to click "Edit categories" and create a category called "Takeaway". Then click
+"Edit category guesses" and set up "BACKOFBEYOND GRILL" as a string for "Takeaway".
+To apply that to your imported data, you can then click on "Re-apply guesses".
+"Re-apply guesses" can be run anytime and will only alter the category of transactions
+that are "Uncategorised".
+
+# Todo:
 
 * Allow more date oriented analysis:
 * Better datepicker which allows you to just go back a single month rather than a whole year

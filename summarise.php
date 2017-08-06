@@ -43,7 +43,7 @@ print "<h1>Transactions summarised by category</h1>";
 
 //print "<p>start and end dates are: $dates[0]</p>";
 if ($dates[0] == "empty") {
-    print "Empty database! You probably need to import some data!";
+    print "Empty database! You probably need to import some data using the Process menu!";
     exit;
 }
     
